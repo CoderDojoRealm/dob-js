@@ -1,0 +1,70 @@
+<html>
+<head>
+    <!-- Here's the stylesheet - it covers the look of the page -->
+    <style type="text/css">
+        h1 {
+            color: red;
+            font-family: Futura, sans-serif;
+        }
+
+        p {
+            color: black;
+            font-family: Futura, sans-serif;
+        }
+    </style>
+
+    <!-- This is the script - it covers the functionality of the page -->
+    <script type="text/javascript">
+        function submitForm() {
+
+            // initialise the variables we need
+            var day, month, year,
+                dateOfBirth, dateOfBirthSecs,
+                dateNowSecs, timeInHours;
+
+            // Get the values from the form
+            day = document.getElementById('day').value;
+            month = document.getElementById('month').value;
+            year = document.getElementById('year').value;
+
+            if (!day || !month || !year) {
+                alert("You didn't fill in all the fields");
+                return;
+            }
+
+            // adjust month to Javascript 0-based counting
+            month = month - 1;
+
+            // work out the date of birth as the number of seconds since epoch
+            dateOfBirth = new Date(year, month, day);
+            dateOfBirthSecs = dateOfBirth.getTime() / 1000;
+
+            // and here's the current time as seconds since epoch
+            dateNowSecs = Date.now() / 1000;
+
+            // Calculate the difference between now and the date of birth
+            timeInHours = (dateNowSecs - dateOfBirthSecs) / (60 * 24);
+
+            // Now, remove the fractional part of the number (all the stuff
+            // after the decimal point)
+            timeInHours = timeInHours.toFixed(0);
+
+            // Tell the user
+            alert('You are ' + timeInHours + ' hours old!');
+        }
+    </script>
+</head>
+
+<!-- And this is the body, which represents the document structure -->
+<body>
+<h1>Hours alive calculator</h1>
+<p>Enter your date of birth below to find out how many hours old you are.</p>
+<form id="dob" onsubmit="submitForm(); return false;">
+    <input type="text" id="day" name="day" placeholder="day"> /
+    <input type="text" id="month" name="month" placeholder="month"> /
+    <input type="text" id="year" name="year" placeholder="year">
+    <input type="submit" />
+</form>
+
+</body>
+</html>
